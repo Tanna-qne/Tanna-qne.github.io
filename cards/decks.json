@@ -1,0 +1,293 @@
+[
+ {
+  "id": "yue-book",
+  "title": "粤语原来这么近",
+  "cards": [
+   {
+    "front": "食饭",
+    "back": "sik6 faan6",
+    "audio": "../yue-book/audio/755ef0b3f11e.mp3"
+   },
+   {
+    "front": "茶餐厅",
+    "back": "caa4 caan1 teng1",
+    "audio": "../yue-book/audio/a554a8f52768.mp3"
+   },
+   {
+    "front": "人",
+    "back": "jan4",
+    "audio": "../yue-book/audio/99beaba45cf4.mp3"
+   },
+   {
+    "front": "我",
+    "back": "ngo5",
+    "audio": "../yue-book/audio/981140d60804.mp3"
+   },
+   {
+    "front": "三",
+    "back": "saam1",
+    "audio": "../yue-book/audio/ba0beaebb099.mp3"
+   },
+   {
+    "front": "唔该",
+    "back": "m4 goi1",
+    "audio": "../yue-book/audio/ea31a7ef8fa5.mp3"
+   },
+   {
+    "front": "三九四零五二",
+    "back": "saam1 gau2 sei3 ling4 ng5 ji6",
+    "audio": "../yue-book/audio/20f70ba3c91d.mp3"
+   },
+   {
+    "front": "买",
+    "back": "maai5",
+    "audio": "../yue-book/audio/4ec8acc3d774.mp3"
+   },
+   {
+    "front": "卖",
+    "back": "maai6",
+    "audio": "../yue-book/audio/2ce6f62d7ca1.mp3"
+   },
+   {
+    "front": "我食饭",
+    "back": "ngo5 sik6 faan6",
+    "audio": "../yue-book/audio/8be2a466001b.mp3"
+   },
+   {
+    "front": "佢",
+    "back": "keoi5",
+    "audio": "../yue-book/audio/ad152db78bae.mp3"
+   },
+   {
+    "front": "你食饭",
+    "back": "nei5 sik6 faan6",
+    "audio": "../yue-book/audio/c27bd89cd059.mp3"
+   },
+   {
+    "front": "佢食饭",
+    "back": "keoi5 sik6 faan6",
+    "audio": "../yue-book/audio/0fd29c33dc56.mp3"
+   },
+   {
+    "front": "咗",
+    "back": "zo2",
+    "audio": "../yue-book/audio/5cafaa1379f9.mp3"
+   },
+   {
+    "front": "我食咗饭",
+    "back": "ngo5 sik6 zo2 faan6",
+    "audio": "../yue-book/audio/801e9c472477.mp3"
+   },
+   {
+    "front": "你食咗饭",
+    "back": "nei5 sik6 zo2 faan6",
+    "audio": "../yue-book/audio/fa7b36397c6f.mp3"
+   },
+   {
+    "front": "佢食咗饭",
+    "back": "keoi5 sik6 zo2 faan6",
+    "audio": "../yue-book/audio/c2ea7f4f2c41.mp3"
+   },
+   {
+    "front": "未",
+    "back": "mei6",
+    "audio": "../yue-book/audio/38a558769a86.mp3"
+   },
+   {
+    "front": "你食咗饭未？",
+    "back": "nei5 sik6 zo2 faan6 mei6",
+    "audio": "../yue-book/audio/3d0737a55b83.mp3"
+   },
+   {
+    "front": "佢去唔去？",
+    "back": "keoi5 heoi3 m4 heoi3",
+    "audio": "../yue-book/audio/4037e0e4c5b2.mp3"
+   },
+   {
+    "front": "唔",
+    "back": "m4",
+    "audio": "../yue-book/audio/c9a8a12e2514.mp3"
+   },
+   {
+    "front": "乜嘢",
+    "back": "mat1 je5",
+    "audio": "../yue-book/audio/ef97cba2867b.mp3"
+   },
+   {
+    "front": "咩",
+    "back": "me1",
+    "audio": "../yue-book/audio/3bae89728a3d.mp3"
+   },
+   {
+    "front": "五",
+    "back": "ng5",
+    "audio": "../yue-book/audio/155a5912a766.mp3"
+   },
+   {
+    "front": "去茶餐厅食乜嘢？",
+    "back": "heoi3 caa4 caan1 teng1 sik6 mat1 je5",
+    "audio": "../yue-book/audio/46a2dcf857e6.mp3"
+   },
+   {
+    "front": "点解",
+    "back": "dim2 gaai2",
+    "audio": "../yue-book/audio/a9c3b0569e93.mp3"
+   },
+   {
+    "front": "点解唔食饭？",
+    "back": "dim2 gaai2 m4 sik6 faan6",
+    "audio": "../yue-book/audio/54b8aec4b7c8.mp3"
+   },
+   {
+    "front": "九",
+    "back": "gau2",
+    "audio": "../yue-book/audio/5ab6cab45177.mp3"
+   },
+   {
+    "front": "呢度",
+    "back": "ni1 dou6",
+    "audio": "../yue-book/audio/0251416be2b2.mp3"
+   },
+   {
+    "front": "嗰度",
+    "back": "go2 dou6",
+    "audio": "../yue-book/audio/9f51ea5f7848.mp3"
+   },
+   {
+    "front": "去嗰度食饭",
+    "back": "heoi3 go2 dou6 sik6 faan6",
+    "audio": "../yue-book/audio/6ef7e2bf4cc7.mp3"
+   },
+   {
+    "front": "去呢度食饭",
+    "back": "heoi3 ni1 dou6 sik6 faan6",
+    "audio": "../yue-book/audio/f60c27906653.mp3"
+   },
+   {
+    "front": "好唔好",
+    "back": "hou2 m4 hou2",
+    "audio": "../yue-book/audio/1506832b4f84.mp3"
+   },
+   {
+    "front": "佢去唔去",
+    "back": "keoi5 heoi3 m4 heoi3",
+    "audio": "../yue-book/audio/f502b314bcc5.mp3"
+   },
+   {
+    "front": "食饭好唔好？",
+    "back": "sik6 faan6 hou2 m4 hou2",
+    "audio": "../yue-book/audio/dd553019560a.mp3"
+   },
+   {
+    "front": "食乜嘢？",
+    "back": "sik6 mat1 je5",
+    "audio": "../yue-book/audio/a0f2477b9dec.mp3"
+   },
+   {
+    "front": "呢个好唔好？",
+    "back": "ni1 go3 hou2 m4 hou2",
+    "audio": "../yue-book/audio/a60432bda9ae.mp3"
+   },
+   {
+    "front": "点解？",
+    "back": "dim2 gaai2",
+    "audio": "../yue-book/audio/192ee0d9118f.mp3"
+   },
+   {
+    "front": "食饭啦",
+    "back": "sik6 faan6 laa1",
+    "audio": "../yue-book/audio/0678d9fc9405.mp3"
+   },
+   {
+    "front": "你唔知咩？",
+    "back": "nei5 m4 zi1 me1",
+    "audio": "../yue-book/audio/f1d69bb217cc.mp3"
+   },
+   {
+    "front": "好唔好啫？",
+    "back": "hou2 m4 hou2 ze1",
+    "audio": "../yue-book/audio/294de0fb36cd.mp3"
+   },
+   {
+    "front": "真系？",
+    "back": "zan1 hai6",
+    "audio": "../yue-book/audio/a29985844612.mp3"
+   },
+   {
+    "front": "一个人",
+    "back": "jat1 go3 jan4",
+    "audio": "../yue-book/audio/6b041ddb4af5.mp3"
+   },
+   {
+    "front": "一杯茶",
+    "back": "jat1 bui1 caa4",
+    "audio": "../yue-book/audio/cc245ef1cb59.mp3"
+   },
+   {
+    "front": "一条鱼",
+    "back": "jat1 tiu4 jyu2",
+    "audio": "../yue-book/audio/9fc5d5b4c64d.mp3"
+   },
+   {
+    "front": "一部车",
+    "back": "jat1 bou6 ce1",
+    "audio": "../yue-book/audio/c3209e46ed6e.mp3"
+   },
+   {
+    "front": "食一条鱼",
+    "back": "sik6 jat1 tiu4 jyu2",
+    "audio": "../yue-book/audio/73ab9c1418ed.mp3"
+   },
+   {
+    "front": "唔该，一杯茶",
+    "back": "m4 goi1, jat1 bui1 caa4",
+    "audio": "../yue-book/audio/1de6223c6f85.mp3"
+   },
+   {
+    "front": "呢一部车",
+    "back": "ni1 jat1 bou6 ce1",
+    "audio": "../yue-book/audio/8031c40282a4.mp3"
+   },
+   {
+    "front": "早晨",
+    "back": "zou2 san4",
+    "audio": "../yue-book/audio/d6c22edcda99.mp3"
+   },
+   {
+    "front": "唔该，我要一杯冻柠茶",
+    "back": "m4 goi1, ngo5 jiu3 jat1 bui1 dung3 ning4 caa4",
+    "audio": "../yue-book/audio/d4e29d39744d.mp3"
+   },
+   {
+    "front": "热",
+    "back": "jit6",
+    "audio": "../yue-book/audio/e749dd44e334.mp3"
+   },
+   {
+    "front": "呢度去地铁站点行？",
+    "back": "ni1 dou6 heoi3 dei6 tit3 zaam6 dim2 haang4",
+    "audio": "../yue-book/audio/b002331a20d6.mp3"
+   },
+   {
+    "front": "下次再倾",
+    "back": "haa6 ci3 zoi3 king1",
+    "audio": "../yue-book/audio/40490bb321b6.mp3"
+   },
+   {
+    "front": "食咗饭未呀？",
+    "back": "sik6 zo2 faan6 mei6 aa3",
+    "audio": "../yue-book/audio/0f463b73dd7d.mp3"
+   },
+   {
+    "front": "你而家去边度呀？",
+    "back": "nei5 ji4 gaa1 heoi3 bin1 dou6 aa3",
+    "audio": "../yue-book/audio/d283c51603af.mp3"
+   },
+   {
+    "front": "我哋听日一齐食饭啦",
+    "back": "ngo5 dei6 ting1 jat6 jat1 cai4 sik6 faan6 laa1",
+    "audio": "../yue-book/audio/a1df2f799de9.mp3"
+   }
+  ]
+ }
+]

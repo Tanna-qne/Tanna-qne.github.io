@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>记忆卡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&display=swap">
+<style>
+/* 布局：牌桌式单卡学习，卡片居中，下方两个大按钮；色调和书架一致（纸色 + 电车深绿） */
+:root { --bg:#f3f1ea; --paper:#fbfaf6; --text:#22281f; --muted:#6c7264; --faint:#b5b8ac; --line:#dcd9cd; --accent:#1f6b4f; --on:#fff; --warn:#9a5a1e;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif; --sans:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#141613; --paper:#1c1f1b; --text:#e8eadf; --muted:#9da394; --faint:#555a4f; --line:#2f332c; --accent:#6cc79c; --on:#0f1a14; --warn:#e0a060; color-scheme:dark; }
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 var(--sans); }
+.wrap { max-width:640px; margin:0 auto; padding-block:calc(28px + env(safe-area-inset-top, 0px)) calc(40px + env(safe-area-inset-bottom, 0px));
+  padding-left:max(20px, env(safe-area-inset-left, 0px)); padding-right:max(20px, env(safe-area-inset-right, 0px)); }
+a { color:var(--accent); }
+.top { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.top a { text-decoration:none; font-weight:600; }
+h1 { font:900 2.2rem/1.2 var(--serif); margin:18px 0 4px; letter-spacing:.04em; }
+.sub { color:var(--muted); margin:0 0 24px; }
+.deck { display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--paper); border:1px solid var(--line);
+  border-radius:10px; padding:16px 18px; margin-bottom:12px; }
+.deck h2 { font:600 1.15rem/1.4 var(--serif); margin:0; }
+.deck .meta { color:var(--muted); font-size:.88rem; font-variant-numeric:tabular-nums; }
+.deck .acts { display:flex; gap:8px; flex-shrink:0; }
+button { font:inherit; cursor:pointer; border-radius:10px; border:1px solid var(--line); background:var(--paper); color:var(--text); padding:8px 14px; }
+button.primary { background:var(--accent); color:var(--on); border-color:var(--accent); font-weight:600; }
+button:focus-visible, textarea:focus-visible, select:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.import { margin-top:28px; background:var(--paper); border:1px dashed var(--line); border-radius:10px; padding:16px 18px; }
+.import summary { cursor:pointer; font-weight:600; }
+.import ol { color:var(--muted); font-size:.9rem; padding-left:1.2em; }
+textarea, input[type=text] { width:100%; font:inherit; color:var(--text); background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:10px; }
+textarea { min-height:140px; }
+.row { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; align-items:center; }
+.note { color:var(--muted); font-size:.85rem; }
+
+/* 学习页 */
+.bar { display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; color:var(--muted); font-size:.9rem; }
+.bar select { font:inherit; color:var(--text); background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:4px 8px; }
+.progress { height:4px; background:var(--line); border-radius:2px; margin:12px 0 20px; overflow:hidden; }
+.progress i { display:block; height:100%; background:var(--accent); transition:width .2s; }
+.card { background:var(--paper); border:1px solid var(--line); border-radius:16px; min-height:300px; padding:28px 22px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:18px; cursor:pointer;
+  box-shadow:0 1px 0 var(--line); }
+.term { font:600 clamp(1.8rem, 8vw, 2.6rem)/1.3 var(--serif); word-break:break-word; }
+.ans { font-size:1.4rem; letter-spacing:.06em; font-variant-numeric:tabular-nums; min-height:1.6em; word-break:break-word; }
+.ans.morphed { color:var(--muted); }
+.ans.orig { color:var(--accent); }
+.hint { color:var(--faint); font-size:.85rem; }
+.play { border:0; background:var(--accent); color:var(--on); width:2.6rem; height:2.6rem; border-radius:50%; font-size:1rem; padding:0; }
+.stage { color:var(--muted); font-size:.8rem; }
+.btns { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+.btns button { padding:14px; font-size:1rem; }
+.done { text-align:center; padding:40px 0; }
+.done h2 { font:600 1.6rem/1.3 var(--serif); }
+@media (prefers-reduced-motion: reduce) { .progress i { transition:none; } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+// ---------------- 存储 ----------------
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('cards:' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('cards:' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const today = new Date().toISOString().slice(0, 10);
+const days = d => Math.round((Date.parse(today) - Date.parse(d)) / 86400000);
+
+// ---------------- 记忆变形 ----------------
+// 第一次见到那天完整；之后每天多遮一点（遮掉的位置每天只增不减），想不起来的卡变得慢一点。
+const FRACTIONS = [0, 0.25, 0.5, 0.75, 1];
+function stageByDays(d) { return d <= 0 ? 0 : d === 1 ? 1 : d <= 3 ? 2 : d <= 6 ? 3 : 4; }
+function hash(s) { let h = 2166136261; for (const c of s) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function order(n, seed) {          // 固定的随机顺序：同一张卡每天按同样顺序多遮几个
+  const a = [...Array(n).keys()]; let s = seed || 1;
+  for (let i = n - 1; i > 0; i--) { s = (Math.imul(s, 1103515245) + 12345) >>> 0; const j = s % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function morph(text, level, seed) {
+  if (level <= 0) return text;
+  const chars = [...text];
+  const letters = chars.map((c, i) => /[\p{L}]/u.test(c) ? i : -1).filter(i => i >= 0);
+  const digits = chars.map((c, i) => /\d/.test(c) ? i : -1).filter(i => i >= 0);
+  const k = Math.ceil(letters.length * FRACTIONS[Math.min(level, 4)]);
+  const hide = new Set(order(letters.length, seed).slice(0, k).map(i => letters[i]));
+  if (level >= 4) digits.forEach(i => hide.add(i));   // 声调数字留到最后才藏
+  return chars.map((c, i) => hide.has(i) ? '·' : c).join('');
+}
+function cardState(id) { return store.get('s:' + id, null); }
+function levelFor(id, previewDays) {
+  const s = cardState(id);
+  if (previewDays !== null) return stageByDays(previewDays);
+  if (!s) return 0;
+  return Math.max(0, Math.min(4, stageByDays(days(s.first)) + (s.off || 0)));
+}
+
+// ---------------- 牌组 ----------------
+let decks = [];
+async function loadDecks() {
+  let built = [];
+  try { built = await (await fetch('decks.json', { cache: 'no-cache' })).json(); } catch (e) {}
+  const mine = store.get('imported', []);
+  decks = [...built.map(d => ({ ...d, source: 'book' })), ...mine.map(d => ({ ...d, source: 'import' }))];
+}
+function parseImport(text, termSep, cardSep) {
+  const t = termSep === 'tab' ? '\t' : termSep === 'comma' ? ',' : ' - ';
+  const rows = cardSep === 'semicolon' ? text.split(';') : text.split(/\r?\n/);
+  return rows.map(r => r.trim()).filter(Boolean).map(r => {
+    const i = r.indexOf(t);
+    return i < 0 ? null : { front: r.slice(0, i).trim(), back: r.slice(i + t.length).trim() };
+  }).filter(c => c && c.front && c.back);
+}
+
+// ---------------- 界面 ----------------
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const player = new Audio();
+
+function home() {
+  const list = decks.map((d, i) => {
+    const seen = d.cards.filter(c => cardState(d.id + '|' + c.front)).length;
+    return `<div class="deck"><div><h2>${esc(d.title)}</h2>
+      <div class="meta">${d.cards.length} 张 · 见过 ${seen} 张${d.source === 'import' ? ' · 自己导入的' : ''}</div></div>
+      <div class="acts">${d.source === 'import' ? `<button data-del="${i}">删除</button>` : ''}<button class="primary" data-go="${i}">学</button></div></div>`;
+  }).join('') || '<p class="note">还没有牌组。生成一本语言书会自动出现，也可以在下面导入 Quizlet。</p>';
+  app.innerHTML = `<div class="top"><a href="../">← 书架</a></div>
+    <h1>记忆卡</h1><p class="sub">第一次见到的那天卡片是完整的。之后每天答案会少一点，你努力回想原来的样子，再点一下对照。</p>
+    ${list}
+    <details class="import"><summary>从 Quizlet 导入</summary>
+      <ol><li>在 Quizlet 打开你的学习集，点"…"→"导出"。</li><li>"术语和定义之间"选"制表符"，"卡片之间"选"新行"。</li><li>点"复制文本"，粘贴到下面。</li></ol>
+      <input type="text" id="impTitle" placeholder="牌组名字，比如：日语五十音">
+      <textarea id="impText" placeholder="术语[Tab]定义&#10;术语[Tab]定义"></textarea>
+      <div class="row">
+        <select id="impTerm"><option value="tab">术语和定义之间：制表符</option><option value="comma">逗号</option><option value="dash">" - "</option></select>
+        <select id="impCard"><option value="line">卡片之间：新行</option><option value="semicolon">分号</option></select>
+        <button class="primary" id="impGo">导入</button><span class="note" id="impMsg"></span>
+      </div>
+      <p class="note">导入的牌组只存在这个浏览器里。</p>
+    </details>`;
+  app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => study(decks[+b.dataset.go]));
+  app.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+    const d = decks[+b.dataset.del];
+    store.set('imported', store.get('imported', []).filter(x => x.id !== d.id));
+    loadDecks().then(home);
+  });
+  document.getElementById('impGo').onclick = () => {
+    const cards = parseImport(document.getElementById('impText').value, document.getElementById('impTerm').value, document.getElementById('impCard').value);
+    const msg = document.getElementById('impMsg');
+    if (!cards.length) { msg.textContent = '没认出卡片，检查一下分隔方式。'; return; }
+    const title = document.getElementById('impTitle').value.trim() || '导入的牌组';
+    store.set('imported', [...store.get('imported', []), { id: 'imp-' + Date.now(), title, cards }]);
+    loadDecks().then(home);
+  };
+}
+
+function study(deck) {
+  const NEW_PER_DAY = 15;
+  const all = deck.cards.map(c => ({ ...c, id: deck.id + '|' + c.front }));
+  const reviews = all.filter(c => cardState(c.id));
+  const fresh = all.filter(c => !cardState(c.id)).slice(0, NEW_PER_DAY);
+  const queue = [...reviews, ...fresh];
+  let i = 0, preview = null, revealed = false;
+
+  function render() {
+    if (i >= queue.length) {
+      app.innerHTML = `<div class="top"><a href="#" id="back">← 牌组</a></div><div class="done"><h2>今天这组过完了</h2>
+        <p class="sub">${queue.length} 张。明天再来，答案会再少一点。</p><button class="primary" id="again">再过一遍</button></div>`;
+      document.getElementById('back').onclick = e => { e.preventDefault(); home(); };
+      document.getElementById('again').onclick = () => { i = 0; render(); };
+      return;
+    }
+    const c = queue[i];
+    if (!cardState(c.id)) store.set('s:' + c.id, { first: today, off: 0 });
+    const lv = levelFor(c.id, preview);
+    const shown = revealed ? c.back : morph(c.back, lv, hash(c.id));
+    const stageText = lv === 0 ? '完整' : `少了 ${Math.round(FRACTIONS[lv] * 100)}%`;
+    app.innerHTML = `<div class="top"><a href="#" id="back">← 牌组</a>
+        <select id="prev" aria-label="预览"><option value="">按天变形</option><option value="1">预览第 2 天</option><option value="3">预览第 4 天</option><option value="7">预览第 8 天</option></select></div>
+      <div class="bar" style="margin-top:14px"><span>${esc(deck.title)}</span><span>${i + 1} / ${queue.length}</span></div>
+      <div class="progress"><i style="width:${i / queue.length * 100}%"></i></div>
+      <div class="card" id="card" role="button" tabindex="0" aria-label="点一下看原样">
+        <div class="term">${esc(c.front)}</div>
+        ${c.audio ? `<button class="play" id="play" aria-label="播放">▶</button>` : ''}
+        <div class="ans ${revealed ? 'orig' : 'morphed'}">${esc(shown)}</div>
+        <div class="hint">${revealed ? '这是原样' : lv === 0 ? '第一次见，记住它的样子' : '先回想原来的样子，再点一下对照'}</div>
+        <div class="stage">${revealed ? '' : stageText}</div>
+      </div>
+      <div class="btns"><button id="miss">没想起来</button><button class="primary" id="got">${lv === 0 ? '记住了' : '想起来了'}</button></div>`;
+    const sel = document.getElementById('prev'); sel.value = preview === null ? '' : String(preview);
+    sel.onchange = () => { preview = sel.value === '' ? null : Number(sel.value); revealed = false; render(); };
+    document.getElementById('back').onclick = e => { e.preventDefault(); home(); };
+    const card = document.getElementById('card');
+    const flip = () => { revealed = !revealed; render(); };
+    card.onclick = e => { if (!e.target.closest('#play')) flip(); };
+    card.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } };
+    const play = document.getElementById('play');
+    if (play) play.onclick = () => { player.src = c.audio; player.play().catch(() => {}); };
+    document.getElementById('got').onclick = () => next(0);
+    document.getElementById('miss').onclick = () => next(-1);
+  }
+  function next(delta) {                 // 没想起来：这张卡变形慢一档
+    const c = queue[i], s = cardState(c.id);
+    if (delta && preview === null && levelFor(c.id, null) > 0) store.set('s:' + c.id, { ...s, off: Math.max(-3, (s.off || 0) + delta) });
+    i++; revealed = false; render();
+  }
+  render();
+}
+
+loadDecks().then(home);
+</script>
+</body>
+</html>
