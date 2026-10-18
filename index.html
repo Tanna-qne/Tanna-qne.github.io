@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>入门书架</title>
+<meta name="description" content="自己生成的入门书，一次读一小节。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&display=swap">
+<style>
+/* 布局：书脊式的书架，一本书一条竖排书脊，点开即读；色调沿用电车深绿 + 纸色 */
+:root { --bg:#f3f1ea; --paper:#fbfaf6; --text:#22281f; --muted:#6c7264; --line:#dcd9cd; --accent:#1f6b4f;
+  --serif:"Noto Serif SC","Songti SC","STSong",serif; --sans:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#141613; --paper:#1c1f1b; --text:#e8eadf; --muted:#9da394; --line:#2f332c; --accent:#6cc79c; color-scheme:dark; }
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:16px/1.7 var(--sans); }
+.wrap { max-width:880px; margin:0 auto; padding-block:calc(48px + env(safe-area-inset-top, 0px)) 64px;
+  padding-left:max(20px, env(safe-area-inset-left, 0px)); padding-right:max(20px, env(safe-area-inset-right, 0px)); }
+header h1 { font:900 clamp(2.2rem, 7vw, 3.4rem)/1.15 var(--serif); margin:0; letter-spacing:.04em; }
+header p { color:var(--muted); margin:.6em 0 0; max-width:34em; }
+.shelf { margin-top:40px; display:flex; flex-wrap:wrap; align-items:flex-end; gap:14px;
+  padding:28px 20px 0; background:var(--paper); border-radius:6px 6px 0 0; border:1px solid var(--line); border-bottom:0; }
+.board { height:14px; background:var(--accent); border-radius:0 0 6px 6px; opacity:.85; }
+.spine { --c:var(--accent); position:relative; width:76px; height:280px; border-radius:4px 4px 2px 2px;
+  background:var(--c); color:#fff; text-decoration:none; display:flex; flex-direction:column; align-items:center;
+  padding:16px 0 12px; box-shadow:inset -6px 0 0 rgba(0,0,0,.12), inset 3px 0 0 rgba(255,255,255,.12);
+  transition:transform .18s ease; }
+.spine:hover, .spine:focus-visible { transform:translateY(-10px); outline:none; }
+.spine:focus-visible { box-shadow:0 0 0 3px var(--text); }
+.spine .t { writing-mode:vertical-rl; font:600 1.15rem/1.2 var(--serif); letter-spacing:.12em; flex:1; overflow:hidden; }
+.spine .band { width:100%; height:6px; background:rgba(255,255,255,.35); margin:10px 0; }
+.spine .n { font-size:.72rem; opacity:.85; font-variant-numeric:tabular-nums; }
+.spine .bar { position:absolute; left:8px; right:8px; bottom:4px; height:3px; background:rgba(255,255,255,.3); border-radius:2px; }
+.spine .bar i { display:block; height:100%; background:#fff; border-radius:2px; }
+.list { margin-top:40px; display:grid; gap:14px; }
+.card { display:grid; grid-template-columns:10px 1fr; gap:16px; background:var(--paper); border:1px solid var(--line);
+  border-radius:8px; padding:16px 18px; text-decoration:none; color:inherit; }
+.card:hover { border-color:var(--muted); }
+.card .c { background:var(--c); border-radius:3px; }
+.card h2 { font:600 1.25rem/1.4 var(--serif); margin:0; text-wrap:balance; }
+.card .meta { color:var(--muted); font-size:.88rem; margin-top:2px; font-variant-numeric:tabular-nums; }
+.card .chs { margin:.5em 0 0; color:var(--muted); font-size:.9rem; }
+.card .go { display:inline-block; margin-top:.6em; color:var(--accent); font-weight:600; }
+footer { margin-top:48px; color:var(--muted); font-size:.85rem; }
+@media (prefers-reduced-motion: reduce) { .spine { transition:none; } }
+@media (max-width:520px) { .spine { width:64px; height:230px; } .spine .t { font-size:1rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>入门书架</h1>
+    <p>每本书一次只读一小节。例句可以点开听，注音会一天天变淡，读着读着就记住了。</p>
+  </header>
+  <nav class="shelf" aria-label="书架"><a class="spine" href="yue-book/" data-key="book:29e4bfbd62" data-units="55" style="--c:#1f6b4f" aria-label="粤语原来这么近"><span class="t">粤语原来这么近</span><span class="band"></span><span class="n">8 章</span><span class="bar"><i></i></span></a></nav>
+  <div class="board"></div>
+  <section class="list"><a class="card" href="yue-book/" data-key="book:29e4bfbd62" data-units="55" style="--c:#1f6b4f"><span class="c"></span><span><h2>粤语原来这么近</h2><div class="meta">8 章 · 55 节 · 约 81 分钟 · 89 个可听的例子</div><p class="chs">先别怕、六个声调、句子骨架、高频词……</p><span class="go">开始读 →</span></span></a></section>
+  <footer>共 1 本 · 最近更新 2026-10-18</footer>
+</div>
+<script>
+// 读到哪：和每本书的阅读页共用浏览器里的进度
+document.querySelectorAll('[data-key]').forEach(el => {
+  let pos = null;
+  try { const v = localStorage.getItem(el.dataset.key + ':pos'); pos = v === null ? null : JSON.parse(v); } catch (e) {}
+  const total = Number(el.dataset.units);
+  const bar = el.querySelector('.bar i');
+  const go = el.querySelector('.go');
+  if (pos === null) { if (go) go.textContent = '开始读 →'; return; }
+  const pct = Math.round((pos + 1) / total * 100);
+  if (bar) bar.style.width = pct + '%';
+  if (go) go.textContent = `读到第 ${pos + 1} / ${total} 节，接着读 →`;
+});
+</script>
+</body>
+</html>
